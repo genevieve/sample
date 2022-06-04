@@ -1,0 +1,18 @@
+# dependencies
+/web/node_modules
+/web/.pnp
+/web/.pnp.js
+
+# testing
+/coverage
+
+# development
+/web/build
+
+# misc
+.DS_Store
+.env*
+
+/web/npm-debug.log*
+/web/yarn-debug.log*
+/web/yarn-error.log*
