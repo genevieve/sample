@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/genevieve/sample/chat"
 	"github.com/genevieve/sample/handlers"
 	"github.com/gorilla/mux"
 	"go.uber.org/zap"
@@ -19,7 +20,12 @@ func main() {
 	config.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	logger, _ := config.Build()
 
+	hub := chat.NewHub()
+	go hub.Run()
+
 	router := mux.NewRouter()
+	ws := handlers.NewChat(hub, logger)
+	router.PathPrefix("/ws").Handler(ws)
 	spa := handlers.NewSPA(content)
 	router.PathPrefix("/").Handler(spa)
 
